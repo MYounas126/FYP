@@ -1,4 +1,4 @@
-# SentinelFlow 🛡️
+# Final Year Project
 
 **ML-Powered Network Intrusion Detection System (NIDS)**
 
@@ -16,14 +16,14 @@ SentinelFlow is a state-of-the-art, real-time Network Intrusion Detection System
 
 ## Key Features
 
-- ** Advanced ML Detection**: Utilizes **XGBoost** for attack classification and **Isolation Forest** for zero-day anomaly detection.
-- ** Real-Time Monitoring**: Captures and analyzes network packets in sub-millisecond timeframes using **Scapy** and **WebSockets**.
-- ** Interactive Dashboard**: A modern, dark-mode React UI for visualizing traffic flows, attack timelines, and threat distribution.
-- ** MITRE ATT&CK Integration**: Automatically maps detected threats to specific Tactics and Techniques (e.g., *T1595 - Active Scanning*).
-- ** Smart Alerts**: Configurable email notifications for critical threats.
-- ** Role-Based Access Control**: Secure authentication system with Admin and Observer roles.
-- ** Historical Analysis**: Time-series analysis of network traffic using **TimescaleDB**.
-- ** Dockerized Deployment**: Fully containerized architecture for easy deployment.
+- **Advanced ML Detection**: Utilizes **XGBoost** for attack classification and **Isolation Forest** for zero-day anomaly detection.
+- **Real-Time Monitoring**: Captures and analyzes network packets in sub-millisecond timeframes using **Scapy** and **WebSockets**.
+- **Interactive Dashboard**: A modern, dark-mode React UI for visualizing traffic flows, attack timelines, and threat distribution.
+- **MITRE ATT&CK Integration**: Automatically maps detected threats to specific Tactics and Techniques (e.g., *T1595 - Active Scanning*).
+- **Smart Alerts**: Configurable email notifications for critical threats.
+- **Role-Based Access Control**: Secure authentication system with Admin and Observer roles.
+- **Historical Analysis**: Time-series analysis of network traffic using **TimescaleDB**.
+- **Dockerized Deployment**: Fully containerized architecture for easy deployment.
 
 ---
 
