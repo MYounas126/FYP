@@ -1,0 +1,150 @@
+version: '3.8'
+
+services:
+  # =============================================================================
+  # Backend API (FastAPI)
+  # =============================================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sentinelflow-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_HOST=timescaledb
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER:-sentinelflow}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-sentinelflow_secure_password}
+      - POSTGRES_DB=${POSTGRES_DB:-sentinelflow}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key}
+      - DEBUG=${DEBUG:-true}
+    volumes:
+      - ./backend/app:/app/app
+      - ./ml/models:/app/ml/models:ro
+      - backend_logs:/app/logs
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sentinelflow-network
+    # GPU support commented out - uncomment if NVIDIA container toolkit is installed
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  # =============================================================================
+  # Frontend (React)
+  # =============================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sentinelflow-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_WS_URL=ws://localhost:8000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    depends_on:
+      - backend
+    networks:
+      - sentinelflow-network
+
+  # =============================================================================
+  # TimescaleDB (PostgreSQL with time-series)
+  # =============================================================================
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    container_name: sentinelflow-timescaledb
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-sentinelflow}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-sentinelflow_secure_password}
+      - POSTGRES_DB=${POSTGRES_DB:-sentinelflow}
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sentinelflow} -d ${POSTGRES_DB:-sentinelflow}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sentinelflow-network
+
+  # =============================================================================
+  # Redis (Cache & Pub/Sub)
+  # =============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: sentinelflow-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sentinelflow-network
+
+  # =============================================================================
+  # ML Training Service (optional, for training)
+  # =============================================================================
+  ml-trainer:
+    build:
+      context: ./ml
+      dockerfile: Dockerfile
+    container_name: sentinelflow-ml-trainer
+    profiles:
+      - training
+    volumes:
+      - ./ml:/app
+      - ml_models:/app/models
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - sentinelflow-network
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  sentinelflow-network:
+    driver: bridge
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  timescaledb_data:
+  redis_data:
+  backend_logs:
+  ml_models:
