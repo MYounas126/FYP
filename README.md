@@ -185,5 +185,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 **Supervisor**: Dr. Muhammad Zain Siddiqi  
 **Co Supervisor**: Dr. Khurram Jadoon  
-Madam Beenish
+Madam Beenish  
+
 **Institution**: GIK Institute of Engineering Sciences and Technology
