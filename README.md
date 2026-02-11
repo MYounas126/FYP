@@ -66,8 +66,8 @@ Our detection engine is trained on **1.9 million** network flows, achieving **98
 - **Reconnaissance** (e.g., Port Scanning)
 
 ### Datasets Used
-- **CESNET-TimeSeries24**: For robust anomaly baseline training. (Link)[ https://zenodo.org/records/13382427]
-- **UWF-ZeekData22**: For comprehensive attack signature training. (Link)[ https://datasets.uwf.edu/]
+- **CESNET-TimeSeries24**: For robust anomaly baseline training. [Link](https://zenodo.org/records/13382427)
+- **UWF-ZeekData22**: For comprehensive attack signature training. [Link](https://datasets.uwf.edu/)
 
 ---
 
