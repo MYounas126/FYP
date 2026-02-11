@@ -129,10 +129,7 @@ npm install
 export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && nvm use 20
 npm run dev
 ```
-cd ml
-python train.py
 
----
 **3. ML Training**
 ```bash
 cd ml
