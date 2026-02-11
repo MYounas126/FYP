@@ -135,6 +135,9 @@ python train.py
 ---
 **3. ML Training**
 ```bash
+cd ml
+python train.py
+
 ```
 
 ##  Usage Guide
