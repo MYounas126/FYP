@@ -184,6 +184,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - **Muhammad Younas** (Backend Developer)
 
 **Supervisor**: Dr. Muhammad Zain Siddiqi  
-**Co Supervisor**: Dr. Khurram Jadoon 
-                   Madam Beenish
+**Co Supervisor**: Dr. Khurram Jadoon  
+Madam Beenish
 **Institution**: GIK Institute of Engineering Sciences and Technology
