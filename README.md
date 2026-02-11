@@ -175,9 +175,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ##  Team
 
-- **Muhammad Umar Maqsood** (Lead Developer & ML Engineer)
-- **Shamina Durrani** (Frontend Developer)
-- **Muhammad Younas** (Backend Developer)
+- **Muhammad Younas**
+- **Muhammad Umar Maqsood** 
+- **Shamina Durrani** 
+
 
 **Supervisor**: Dr. Muhammad Zain Siddiqi  
 **Co Supervisor**: Dr. Khurram Jadoon  
