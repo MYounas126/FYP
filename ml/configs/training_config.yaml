@@ -1,0 +1,71 @@
+# =============================================================================
+# SentinelFlow ML Training Configuration
+# =============================================================================
+
+# Data Configuration
+data:
+  cesnet_path: "data/raw/cesnet-timeseries24"
+  uwf_path: "data/raw/uwf-zeekdata22"
+  aggregation: "1h"  # 10m, 1h, 1d
+  test_size: 0.2
+  random_state: 42
+
+# Feature Engineering
+features:
+  flow_features:
+    - total_bytes
+    - total_packets
+    - bytes_ratio
+    - packets_ratio
+    - duration
+    - bytes_per_second
+    - packets_per_second
+  time_features:
+    - hour
+    - day_of_week
+    - is_weekend
+    - is_business_hours
+  encode_categorical: true
+  scale_features: true
+
+# Anomaly Detection (Isolation Forest)
+anomaly_detector:
+  n_estimators: 100
+  contamination: 0.1
+  max_samples: "auto"
+  max_features: 1.0
+  bootstrap: false
+
+# Attack Classifier (XGBoost)
+classifier:
+  model_type: "xgboost"  # xgboost, random_forest, lightgbm
+  n_estimators: 100
+  max_depth: 6
+  learning_rate: 0.1
+  subsample: 0.8
+  colsample_bytree: 0.8
+  early_stopping_rounds: 10
+  use_gpu: true
+
+# SMOTE for class imbalance
+smote:
+  enabled: true
+  sampling_strategy: "auto"
+  k_neighbors: 5
+
+# Model Saving
+output:
+  model_dir: "models"
+  save_checkpoints: true
+  checkpoint_dir: "models/checkpoints"
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/training.log"
+
+# MLflow (optional)
+mlflow:
+  enabled: false
+  tracking_uri: "http://localhost:5000"
+  experiment_name: "sentinelflow"
