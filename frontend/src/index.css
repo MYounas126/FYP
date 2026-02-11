@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Base styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Utility classes */
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .card {
+    @apply bg-dark-card rounded-lg border border-dark-border;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg
+           transition-colors duration-200 font-medium;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-card hover:bg-dark-border text-white px-4 py-2 rounded-lg
+           border border-dark-border transition-colors duration-200 font-medium;
+  }
+
+  .input {
+    @apply bg-dark-card border border-dark-border rounded-lg px-4 py-2
+           text-white placeholder-gray-500 focus:outline-none focus:ring-2
+           focus:ring-primary-500 focus:border-transparent;
+  }
+
+  .badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-critical {
+    @apply bg-red-500/20 text-red-400;
+  }
+
+  .badge-high {
+    @apply bg-orange-500/20 text-orange-400;
+  }
+
+  .badge-medium {
+    @apply bg-yellow-500/20 text-yellow-400;
+  }
+
+  .badge-low {
+    @apply bg-green-500/20 text-green-400;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Pulse animation for live indicators */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.live-pulse {
+  animation: livePulse 2s ease-in-out infinite;
+}
