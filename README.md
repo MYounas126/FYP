@@ -10,42 +10,29 @@
 
 SentinelFlow is a state-of-the-art, real-time Network Intrusion Detection System (NIDS) that leverages advanced machine learning algorithms to detect and classify network anomalies. Built for enterprise-grade security, it integrates seamlessly with the **MITRE ATT&CK** framework to provide actionable threat intelligence.
 
-![Dashboard Preview](docs/dashboard_preview.png)
+![Dashboard Preview]
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-- **🧠 Advanced ML Detection**: Utilizes **XGBoost** for attack classification and **Isolation Forest** for zero-day anomaly detection.
-- **⚡ Real-Time Monitoring**: Captures and analyzes network packets in sub-millisecond timeframes using **Scapy** and **WebSockets**.
-- **📊 Interactive Dashboard**: A modern, dark-mode React UI for visualizing traffic flows, attack timelines, and threat distribution.
-- **🛡️ MITRE ATT&CK Integration**: Automatically maps detected threats to specific Tactics and Techniques (e.g., *T1595 - Active Scanning*).
-- **📩 Smart Alerts**: Configurable email notifications for critical threats.
-- **🔒 Role-Based Access Control**: Secure authentication system with Admin and Observer roles.
-- **📈 Historical Analysis**: Time-series analysis of network traffic using **TimescaleDB**.
-- **🐳 Dockerized Deployment**: Fully containerized architecture for easy deployment.
+- ** Advanced ML Detection**: Utilizes **XGBoost** for attack classification and **Isolation Forest** for zero-day anomaly detection.
+- ** Real-Time Monitoring**: Captures and analyzes network packets in sub-millisecond timeframes using **Scapy** and **WebSockets**.
+- ** Interactive Dashboard**: A modern, dark-mode React UI for visualizing traffic flows, attack timelines, and threat distribution.
+- ** MITRE ATT&CK Integration**: Automatically maps detected threats to specific Tactics and Techniques (e.g., *T1595 - Active Scanning*).
+- ** Smart Alerts**: Configurable email notifications for critical threats.
+- ** Role-Based Access Control**: Secure authentication system with Admin and Observer roles.
+- ** Historical Analysis**: Time-series analysis of network traffic using **TimescaleDB**.
+- ** Dockerized Deployment**: Fully containerized architecture for easy deployment.
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 SentinelFlow employs a microservices architecture to ensure scalability and resilience.
 
 ### High-Level Architecture
 
-```mermaid
-flowchart TB
-    Client[Web Client] <-->|WebSocket/REST| Backend[FastAPI Backend]
-    Backend <-->|Pub/Sub| Redis[Redis Cache]
-    Backend <-->|Store| DB[TimescaleDB]
-    Backend <-->|Capture| Network[Network Interface]
-    Backend -->|Inference| ML[ML Engine]
-    
-    subgraph "ML Engine"
-    ML --> Anomaly[Isolation Forest]
-    ML --> Classify[XGBoost Classifier]
-    end
-```
 
 ### Technology Stack
 
@@ -61,7 +48,7 @@ flowchart TB
 
 ---
 
-## 🧠 Machine Learning Pipeline
+##  Machine Learning Pipeline
 
 Our detection engine is trained on **1.9 million** network flows, achieving **98.8% accuracy** in validation.
 
@@ -79,12 +66,12 @@ Our detection engine is trained on **1.9 million** network flows, achieving **98
 - **Reconnaissance** (e.g., Port Scanning)
 
 ### Datasets Used
-- **CESNET-TimeSeries24**: For robust anomaly baseline training.
-- **UWF-ZeekData22**: For comprehensive attack signature training.
+- **CESNET-TimeSeries24**: For robust anomaly baseline training. (Link)[ https://zenodo.org/records/13382427]
+- **UWF-ZeekData22**: For comprehensive attack signature training. (Link)[ https://datasets.uwf.edu/]
 
 ---
 
-## 🛠️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 - **Docker** & **Docker Compose**
@@ -92,7 +79,7 @@ Our detection engine is trained on **1.9 million** network flows, achieving **98
 - **Python 3.12+** (for local backend dev)
 - **Linux Environment** (Recommended for packet capture)
 
-### 🐳 Installation (Docker - Recommended)
+###  Installation (Docker - Recommended)
 
 1.  **Clone the Repository**
     ```bash
@@ -117,13 +104,10 @@ Our detection engine is trained on **1.9 million** network flows, achieving **98
     - **API Docs**: http://localhost:8000/docs
     - **DB Admin**: http://localhost:5050 (pgAdmin)
 
-### Default Credentials
-- **Username**: `admin`
-- **Password**: `admin123`
 
 ---
 
-## 💻 Local Development Setup
+##  Local Development Setup
 
 If you prefer running services locally for development:
 
@@ -135,19 +119,25 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Run with sudo for packet capture capability
-sudo venv/bin/python -m uvicorn app.main:app --reload --host 0.0.0.0
+sudo python -m uvicorn app.main_dev:app --host 0.0.0.0 --port 8000
 ```
 
 **2. Frontend**
 ```bash
 cd frontend
 npm install
+export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && nvm use 20
 npm run dev
 ```
+cd ml
+python train.py
 
 ---
+**3. ML Training**
+```bash
+```
 
-## 🛡️ Usage Guide
+##  Usage Guide
 
 ### 1. Dashboard Overview
 Upon logging in, you are greeted with the comprehensive dashboard showing active monitoring status, traffic statistics, and recent alerts.
@@ -170,7 +160,7 @@ sudo nmap -sS -T4 192.168.1.X
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please follow these steps:
 1.  Fork the repository.
@@ -181,17 +171,19 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📜 License
+##  License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 👥 Team
+##  Team
 
 - **Muhammad Umar Maqsood** (Lead Developer & ML Engineer)
 - **Shamina Durrani** (Frontend Developer)
 - **Muhammad Younas** (Backend Developer)
 
 **Supervisor**: Dr. Muhammad Zain Siddiqi  
+**Co Supervisor**: Dr. Khurram Jadoon 
+                   Madam Beenish
 **Institution**: GIK Institute of Engineering Sciences and Technology
