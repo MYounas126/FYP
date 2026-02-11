@@ -27,10 +27,6 @@ SentinelFlow is a state-of-the-art, real-time Network Intrusion Detection System
 
 ---
 
-##  System Architecture
-
-SentinelFlow employs a microservices architecture to ensure scalability and resilience.
-
 ### High-Level Architecture
 
 
