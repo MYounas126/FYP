@@ -36,7 +36,7 @@ export default function Layout() {
   return (
     <div className="flex h-screen bg-dark-bg">
       {/* Sidebar */}
-      <aside className="w-64 bg-dark-card border-r border-dark-border flex flex-col">
+      <aside className="w-64 soc-surface border-r border-dark-border/70 flex flex-col">
         {/* Logo */}
         <div className="h-16 flex items-center px-6 border-b border-dark-border">
           <Shield className="h-8 w-8 text-primary-500" />
@@ -51,10 +51,10 @@ export default function Layout() {
               to={item.href}
               className={({ isActive }) =>
                 clsx(
-                  'flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+                  'flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200',
                   isActive
-                    ? 'bg-primary-600 text-white'
-                    : 'text-gray-400 hover:bg-dark-border hover:text-white'
+                    ? 'bg-primary-600 text-white shadow-md shadow-primary-900/30'
+                    : 'text-gray-400 hover:bg-dark-border hover:text-white hover:translate-x-0.5'
                 )
               }
             >
@@ -114,11 +114,15 @@ export default function Layout() {
       {/* Main content */}
       <main className="flex-1 overflow-auto">
         {/* Header */}
-        <header className="h-16 bg-dark-card border-b border-dark-border flex items-center justify-between px-6">
+        <header className="h-16 soc-surface border-b border-dark-border/70 flex items-center justify-between px-6">
           <h1 className="text-lg font-semibold text-white">
             Network Intrusion Detection System
           </h1>
           <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center gap-2 text-xs text-slate-300 bg-slate-900/60 border border-slate-700/70 px-3 py-1.5 rounded-full">
+              <span className={clsx('w-2 h-2 rounded-full', isConnected ? 'bg-emerald-400 live-pulse' : 'bg-rose-400')} />
+              {isConnected ? 'SOC Link Active' : 'SOC Link Down'}
+            </div>
             <button className="relative p-2 text-gray-400 hover:text-white transition-colors">
               <Bell className="h-5 w-5" />
               {newAlertCount > 0 && (
@@ -131,7 +135,7 @@ export default function Layout() {
         </header>
 
         {/* Page content */}
-        <div className="p-6">
+        <div className="p-6 animate-slide-in">
           <Outlet />
         </div>
       </main>
