@@ -283,7 +283,7 @@ export default function DashboardPage() {
                 stats.recent_alerts.map((alert) => (
                   <tr
                     key={alert.id}
-                    className="border-b border-dark-border hover:bg-dark-border/50 transition-colors"
+                    className="border-b border-dark-border table-row-hover"
                   >
                     <td className="px-6 py-4 text-sm text-gray-300">
                       {format(new Date(alert.timestamp), 'MMM d, HH:mm:ss')}
