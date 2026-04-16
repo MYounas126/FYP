@@ -169,7 +169,7 @@ def generate_attack_traffic(attack_type: str) -> dict:
         "dst_ip": f"10.0.{random.randint(1,5)}.{random.randint(1,254)}",
     }
 
-
+from .email_notifier import process_ml_prediction
 def predict_anomaly(traffic: dict) -> tuple:
     """Run anomaly detection on traffic."""
     # For anomaly detection, we need CESNET-style features
@@ -202,7 +202,18 @@ def predict_anomaly(traffic: dict) -> tuple:
     is_anomaly = prediction == -1
     # Convert score to 0-1 range (lower decision score = more anomalous)
     anomaly_score = max(0, min(1, 0.5 - score))
+    if is_anomaly and anomaly_score > 0.95:
+        flow_data = {
+            "src_ip": traffic.get("src_ip", "Unknown"),
+            "dst_ip": traffic.get("dst_ip", "Unknown"),
+            "alert_id": traffic.get("alert_id", 0)
+        }
 
+    process_ml_prediction(
+        prediction="Anomalous Network Behavior",
+        confidence=anomaly_score * 100,
+        flow_data=flow_data
+    )
     return is_anomaly, anomaly_score
 
 
